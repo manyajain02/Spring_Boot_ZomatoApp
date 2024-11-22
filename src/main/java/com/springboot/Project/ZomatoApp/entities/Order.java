@@ -3,17 +3,22 @@ package com.springboot.Project.ZomatoApp.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.Project.ZomatoApp.entities.enums.PaymentMethod;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
     private User customer;
 
     @JsonIgnore
@@ -26,16 +31,23 @@ public class Order {
 
     private String status;
 
-    private LocalDateTime createdTime;
+    private LocalDateTime createdTime; //
 
-//    private PointDto deliveryLocation;
+    @ManyToOne                         /// many order can have same address.
+    private Address deliveryAddress;
 
-//    private List<OrderItems> items;
+//    private PointDto deliveryLocation; // deliveryAddress
+
+
+    private List<OrderItems> items;
 
     private PaymentMethod paymentMethod;
 
     private int totalPreparationTime;
-//    private String otp;
+
+    private int totalItem;
+    private int totalPrice;
+    //    private String otp;
 
 //    Methods: calculateTotal(), updateStatus())
 }
